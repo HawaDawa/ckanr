@@ -18,7 +18,7 @@ ds_search_sql_post <- function(sql, url = get_default_url(), as = 'list',
   body <- ckanr:::tojun(ckanr:::cc(list(sql=sql)), TRUE)
   res <- httr:::POST(file.path(notrail(url), "api/action/datastore_search_sql"), config,
                      body=body, encode="json")
-  httr:::stop_for_status(res)
+  httr:::stop_for_status(res, task=sql)
   res <- content(res, "text", encoding = "UTF-8")
   switch(as, json = res, list = jsl(res), table = jsd(res))
 }
